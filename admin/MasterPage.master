@@ -1,0 +1,456 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="Admin_MasterPage" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <title>Admin</title>
+    <style type="text/css">
+        .badge-notify{
+   background:red;
+   position:relative;
+   top: -15px;
+   left: -25px;
+  }
+    .modalBackground
+    {
+        background-color: Black;
+        filter: alpha(opacity=90);
+        opacity: 0.8;
+    }
+    .modalPopup
+    {
+        background-color: #FFFFFF;
+        border-width: 3px;
+        border-style: solid;
+        border-color: black;
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: auto;
+        height: auto;
+    }
+        .right {
+            position: absolute;
+            right: 0px;
+            width: 300px;
+            /*background-color: #b0e0e6;*/
+        }
+</style>
+                                    <script>
+
+                                        function Alert() {
+                                            return alert("No changes made")
+                                        }
+    </script>
+    
+   <script src="../assets/js/jquery-1.8.2.min.js"></script>
+    <%--<link href="jQueryToast/src/main/resources/css/jquery.toastmessage.css" rel="stylesheet" />--%>
+    <%--<script src="jQueryToast/src/main/javascript/jquery.toastmessage.js"></script>--%>
+    <link href="../assets/jQueryToast/src/main/resources/css/jquery.toastmessage.css" rel="stylesheet" />
+    <script src="../assets/jQueryToast/src/test/javascript/jquery.toastmessage.tests.js"></script>
+<script type="text/javascript">
+    function showSuccessToast() {
+        $().toastmessage('showSuccessToast', "Value added");
+    }
+    function showNoticeToast() {
+        $().toastmessage('showNoticeToast', "Notice Dialog");
+    }
+    function showWarningToast() {
+        $().toastmessage('showWarningToast', "OK but value should be at least 8 char");
+    }
+    function showErrorToast() {
+        $().toastmessage('showErrorToast', "Insert a value");
+    }
+</script>
+      
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <%--<link href="css/jquery.toastmessage.css" rel="stylesheet" />--%>
+    <script type="text/javascript" src="js/bs.pagination.js"></script>
+        <script src="js/jquery-1.11.0.js"></script>
+    <%--<script src="js/jquery.toastmessage.js"></script>--%>
+    <script src="js/bs.pagination.js"></script>
+    <!-- Custom CSS -->
+     <link href="css/sb-admin.css" rel="stylesheet"/> 
+
+    <!-- Morris Charts CSS -->
+    <link href="css/plugins/morris.css" rel="stylesheet"/>
+    
+    <!-- Custom Fonts -->
+    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+   
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+   
+</head>
+<body>
+    <form id="f5" runat="server">
+        
+    <div id="wrapper">
+       
+        
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background-color:#2151A2"> <%--#003366--%>
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+               
+                
+                <a class="navbar-brand" style="color:white;padding-top:0px;">
+                    <img src="images/logo.jpg" />  
+                </a>
+                <div class="navbar-text"> <span style="font-weight:bold;color:#ffffff;" > DEBIS PHARMA </span> </div>
+            </div>
+            
+            <!-- Top Menu Items -->
+            
+            <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" >
+                <Scripts>
+                    <asp:ScriptReference Path="~/admin/js/FixFocus.js" />
+                </Scripts>
+            </asp:ToolkitScriptManager>
+   
+   
+
+<%--        <asp:Timer runat="server" id="Timer3" Interval="10000" ></asp:Timer>
+    <asp:Timer runat="server" id="Timer4" Interval="10000" ></asp:Timer>
+    <asp:Timer runat="server" id="Timer5" Interval="10000" ></asp:Timer>--%>
+            <div id="test">
+            <ul class="nav navbar-right top-nav">
+                <%--<li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                    <ul class="dropdown-menu message-dropdown">
+                        <li class="message-preview">
+                            <a href="#">
+                                <div class="media">
+                                    <span class="pull-left">
+                                        <img class="media-object" src="http://placehold.it/50x50" alt=""/>
+                                    </span>
+                                    <div class="media-body">
+                                        <h5 class="media-heading"><strong>John Smith</strong>
+                                        </h5>
+                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="message-preview">
+                            <a href="#">
+                                <div class="media">
+                                    <span class="pull-left">
+                                        <img class="media-object" src="http://placehold.it/50x50" alt=""/>
+                                    </span>
+                                    <div class="media-body">
+                                        <h5 class="media-heading"><strong>John Smith</strong>
+                                        </h5>
+                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="message-preview">
+                            <a href="#">
+                                <div class="media">
+                                    <span class="pull-left">
+                                        <img class="media-object" src="http://placehold.it/50x50" alt=""/>
+                                    </span>
+                                    <div class="media-body">
+                                        <h5 class="media-heading"><strong>John Smith</strong>
+                                        </h5>
+                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="message-footer">
+                            <a href="#">Read All New Messages</a>
+                        </li>
+                    </ul>
+                </li>--%>
+                
+              <asp:Button ID="btnRefresh" Text="text" runat="server"  style="display:none" OnClick="btnRefresh_Click"/>
+
+                    
+                <%--<asp:Label ID="label1" runat="server" Text="Page not refreshed yet"></asp:Label>--%>
+                 <%--<asp:UpdatePanel runat="server" id="UpdatePanel1">
+        <Triggers>
+           <asp:AsyncPostBackTrigger ControlID="btnRefresh" EventName="Click" />
+        </Triggers>
+<ContentTemplate>--%>       
+                 <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b>
+                        <span class="badge badge-notify">
+                               <asp:UpdatePanel runat="server" id="UpdatePanel2">
+        <Triggers>
+           <asp:AsyncPostBackTrigger ControlID="btnRefresh" EventName="Click" />
+        </Triggers>
+<ContentTemplate>
+     
+                            <%--<asp:Timer runat="server" id="Timer1" Interval="10000" ></asp:Timer>--%>
+                            <asp:Label ID="lblNotifyNumber" runat="server"></asp:Label>
+                        </ContentTemplate>
+                                   </asp:UpdatePanel>
+                        </span> </a>
+                    <ul class="dropdown-menu alert-dropdown">
+                       
+                        <li>
+                            <a href="NotificationOrderPlaced.aspx"> <span class="label label-primary">Orders Placed</span><span class="badge">
+                                 <asp:UpdatePanel runat="server" id="UpdatePanel3">
+        <Triggers>
+           <asp:AsyncPostBackTrigger ControlID="btnRefresh" EventName="Click" />
+        </Triggers>
+<ContentTemplate>  
+                                <%--<asp:Timer runat="server" id="Timer2" Interval="10000" ></asp:Timer>--%>
+
+                                <asp:Label ID="lblOrdersPlaced" runat="server"></asp:Label>
+     </ContentTemplate>
+                                   </asp:UpdatePanel>
+                        </span></a>
+                        </li>
+                        <li>
+                            <a href="NotificationWarning.aspx"><span class="label label-success">Less Stock Warning</span><span class="badge">
+                                    <asp:UpdatePanel runat="server" id="UpdatePanel4">
+        <Triggers>
+           <asp:AsyncPostBackTrigger ControlID="btnRefresh" EventName="Click" />
+        </Triggers>
+<ContentTemplate>  
+                                <%--<asp:Timer runat="server" id="Timer3" Interval="10000" ></asp:Timer>--%>
+
+                                <asp:Label ID="lblWarning" runat="server"></asp:Label>
+    </ContentTemplate>
+                                   </asp:UpdatePanel>
+                                                             </span></a>
+                        </li>
+                        <li>
+                            <a href="NotificationStockEnded.aspx"> <span class="label label-info">Stock Finished</span><span class="badge">
+                                <asp:UpdatePanel runat="server" id="UpdatePanel5">
+        <Triggers>
+           <asp:AsyncPostBackTrigger ControlID="btnRefresh" EventName="Click" />
+        </Triggers>
+<ContentTemplate>  
+                                <%--<asp:Timer runat="server" id="Timer4" Interval="10000" ></asp:Timer>--%>
+
+                                 <asp:Label ID="lblStockEnded" runat="server"></asp:Label>
+     </ContentTemplate>
+                                   </asp:UpdatePanel>
+                                                                              </span></a>
+                        </li>
+                        <li>
+                            <a href="NotificationDelivered.aspx"> <span class="label label-warning">Order Delivered</span><span class="badge">
+                              
+                                <asp:UpdatePanel runat="server" id="updatepanel6">
+        <triggers>
+           <asp:AsyncPostbackTrigger ControlID="btnRefresh" eventname="Click" />
+        </triggers>
+<contenttemplate>  
+                                
+
+                                 <asp:Label ID="lblOrderDelivered" runat="server"></asp:Label>
+                         </ContentTemplate>
+                                   </asp:UpdatePanel>
+                                </span></a>
+                        </li>
+                        <%--<li>
+                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
+                        </li>--%>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="AllNotification.aspx">View All</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                       <%-- </ContentTemplate>
+                </asp:UpdatePanel>--%>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> &nbsp;<asp:Label ID="username" runat="server" ></asp:Label><b class="caret"></b></a>
+                    <ul class="dropdown-menu" style="width: 220px;">
+                        <li>
+                            <a href="Profile.aspx"><i class="fa fa-fw fa-user"></i> Profile</a>
+                        </li>
+                        <li>
+                            <a href="ChangePassword.aspx"><i class="fa fa-key"></i> Change Password</a>
+                        </li>
+                        <li>
+                            <a href="Registration.aspx"><i class="fa fa-fw fa-gear"></i> Employee Registration</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="../startbootstrap/main.aspx"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                        </li>
+                    </ul>
+                </li>
+               
+            </ul>
+                </div>
+    <%--</ContentTemplate>
+        
+</asp:UpdatePanel>--%>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li>
+                        <a href="Dashboard.aspx" style="color:white"><i class="fa fa-fw fa fa-dashboard"></i>Dashboard </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo2" style="color:white"><i class="fa fa-fw fa-plus"></i> Medicine <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo2" class="collapse">
+                            <li>
+                                <a href="MedicineCategory.aspx" style="color:white">Medicine Category</a>
+                            </li>
+                            <li>
+                                <a href="Medicines.aspx" style="color:white">Medicine In Stock</a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="Orders.aspx" style="color:white"><i class="fa fa-fw fa-ambulance"></i>Medical Store Orders</a>
+                    </li>
+                   
+                    <li>
+                        <a href="MedicalStore.aspx" style="color:white"><i class="fa fa-fw fa-users"></i> Clients</a>
+                    </li>
+                    <li>
+                        <a href="MedicineCompany.aspx" style="color:white"><i class="fa fa-fw fa-truck"></i> Suppliers</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo1" style="color:white"><i class="fa fa-fw fa-money"></i> Income <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo1" class="collapse">
+                            <li>
+                                <a href="Sales.aspx" style="color:white">View Sales</a>
+                            </li>
+                            
+                            <li>
+                                <a href="SaleInvoices.aspx" style="color:white"> View Sales Invoice </a>
+                            </li>
+                            <li>
+                                <a href="SalesReturn.aspx" style="color:white"> View Sale Return</a>
+                            </li>
+                            <li>
+                                <a href="SaleReturnInvoices.aspx" style="color:white"> View Sales Return Invoice </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo" style="color:white"><i class="fa fa-fw fa-file"></i> Expenses <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo" class="collapse">
+                            <li>
+                                <a href="Purchase.aspx" style="color:white"> View Purchase</a>
+                            </li>
+                            <li>
+                                <a href="PurchaseInvoice.aspx" style="color:white"> View Purchase Invoice</a>
+                            </li>
+                            <li>
+                                <a href="PurchasesReturn.aspx" style="color:white"> View Purchase Return</a>
+                            </li>
+                            <li>
+                                <a href="PurchaseReturnInvoice.aspx" style="color:white"> View Purchase Return Invoices </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo4" style="color:white"><i class="fa fa-fw fa-file"></i> Reporting <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo4" class="collapse">
+                            <li>
+                                <a href="SaleReport.aspx" style="color:white">View Sale Report</a>
+                            </li>
+                            <li>
+                                <a href="SaleReturnReport.aspx" style="color:white">View Sale Returns Report</a>
+                            </li>
+                            
+                            <li>
+                                <a href="PurchaseReport.aspx" style="color:white">View Purchase Report </a>
+                            </li>
+                            <li>
+                                <a href="PurchaseReturnReport.aspx" style="color:white">View Purchase Return Report </a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                   <%-- <li>
+                        <a href="MedicalStoreReport.aspx" style="color:white"><i class="fa fa-fw fa-users"></i> Stock Sale's</a>
+                    </li>--%>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+        <script type="text/javascript">
+            window.onload = function () {
+                setInterval(function () {
+                    document.getElementById("<%=btnRefresh.ClientID %>").click();
+                }, 10000);
+            };
+</script>
+        <div id="page-wrapper">
+
+            
+
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+       <%-- <script  type="text/javascript">
+            function Prevent_Session_Timeout() {
+                var callerurl = "Prevent_Session.aspx";
+
+                if (window.XMLHttpRequest) {
+                    xhttp = new XMLHttpRequest()
+                }
+                else {
+                    xhttp = new ActiveXObject("Microsoft.XMLHTTP")
+                }
+                xhttp.open("POST", callerurl, true);
+                xhttp.send("");
+
+                window.setTimeout("Prevent_Session_Timeout();", 60000);
+            }
+
+            //Initial calling
+            Prevent_Session_Timeout();
+</script>--%>
+        </asp:ContentPlaceHolder>
+                
+           
+
+        </div>
+        <!-- /#page-wrapper -->
+ 
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery Version 1.11.0 -->
+    <script src="js/jquery-1.11.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="js/plugins/morris/raphael.min.js"></script>
+    <script src="js/plugins/morris/morris.min.js"></script>
+    <script src="js/plugins/morris/morris-data.js"></script>
+    
+    
+    
+    
+    </form>
+</body>
+</html>

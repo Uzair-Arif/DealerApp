@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+    <siteMapNode url="~/Home.aspx" title="Home"  description="Home Page" roles="*">
+      <siteMapNode url="javascript:;" title="Admin Panel" description="Admin Panel" roles ="Administrator">
+        <siteMapNode url ="~/sb-admin/MedicalStore.aspx" title="MedicalStore" description="Medical Store Page"></siteMapNode>
+        <siteMapNode url ="~/sb-admin/MedicineCompany.aspx" title="Medicine Company" description="Medicine Company Page"></siteMapNode>
+        <siteMapNode url ="~/sb-admin/Medicines.aspx" title="Medicine" description="Medicine Page"></siteMapNode>
+        <siteMapNode url ="~/sb-admin/Orders.aspx" title="Orders" description="Orders Page"></siteMapNode>
+        <siteMapNode url ="~/sb-admin/Profile.aspx" title="Profile" description="Profile Page"></siteMapNode>
+        <siteMapNode url ="~/sb-admin/Sales.aspx" title="Sales" description="Sales Page"></siteMapNode>
+      </siteMapNode>
+        <!--<siteMapNode url="" title=""  description="" />
+        <siteMapNode url="" title=""  description="" />-->
+    </siteMapNode>
+</siteMap>
