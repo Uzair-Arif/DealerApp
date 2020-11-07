@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Debis Pharma DB" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDB)\v11.0;AttachDbFilename=&quot;|DataDirectory|\Debis Pharma DB.mdf&quot;;Integrated Security=True;Connect Timeout=30" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="Debis_Pharma_DBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Distributor" Member="Distributors">
+    <Type Name="Distributor">
+      <Column Name="Id" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Mobile" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="[Alternative Mobile]" Member="Alternative_Mobile" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="[Alternative Email]" Member="Alternative_Email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Fax" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Medicine_Category" Member="Medicine_Categories">
+    <Type Name="Medicine_Category">
+      <Column Name="MedicineCategoryID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MedicineCategoryName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Medicine_Category_Medicine_In_Stock" Member="Medicine_In_Stocks" ThisKey="MedicineCategoryID" OtherKey="MedicineCategoryID" Type="Medicine_In_Stock" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sales" Member="Sales">
+    <Type Name="Sale">
+      <Column Name="SaleID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="OrderIDByMS" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="Sale_Sales_Return" Member="Sales_Returns" ThisKey="SaleID" OtherKey="SaleID" Type="Sales_Return" />
+      <Association Name="Sale_Sales_Invoice" Member="Sales_Invoices" ThisKey="SaleID" OtherKey="SaleID" Type="Sales_Invoice" />
+      <Association Name="Order_By_Medical_Store_Sale" Member="Order_By_Medical_Store" ThisKey="OrderIDByMS" OtherKey="OrderIDByMS" Type="Order_By_Medical_Store" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Roles" Member="Roles">
+    <Type Name="Role">
+      <Column Name="RoleId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RoleName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Role_User" Member="Users" ThisKey="RoleId" OtherKey="RoleId" Type="User" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Username" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastLoginDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="RoleId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="User_UserActivation" Member="UserActivation" ThisKey="UserId" OtherKey="UserId" Type="UserActivation" Cardinality="One" />
+      <Association Name="User_Notification" Member="Notifications" ThisKey="UserId" OtherKey="UserID" Type="Notification" />
+      <Association Name="Role_User" Member="Role" ThisKey="RoleId" OtherKey="RoleId" Type="Role" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserActivation" Member="UserActivations">
+    <Type Name="UserActivation">
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ActivationCode" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Association Name="User_UserActivation" Member="User" ThisKey="UserId" OtherKey="UserId" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sales_Return" Member="Sales_Returns">
+    <Type Name="Sales_Return">
+      <Column Name="SaleReturnID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ReturnDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="SaleID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="ReturnAmount" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="Sales_Return_Sales_Return_Invoice" Member="Sales_Return_Invoices" ThisKey="SaleReturnID" OtherKey="SaleReturnID" Type="Sales_Return_Invoice" />
+      <Association Name="Sale_Sales_Return" Member="Sale" ThisKey="SaleID" OtherKey="SaleID" Type="Sale" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Purchase" Member="Purchases">
+    <Type Name="Purchase">
+      <Column Name="PurchaseID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OrderIDToMC" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="Purchase_Purchase_Return" Member="Purchase_Returns" ThisKey="PurchaseID" OtherKey="PurchaseID" Type="Purchase_Return" />
+      <Association Name="Purchase_Purchase_Invoice" Member="Purchase_Invoices" ThisKey="PurchaseID" OtherKey="PurchaseID" Type="Purchase_Invoice" />
+      <Association Name="Order_To_Medicine_Company_Purchase" Member="Order_To_Medicine_Company" ThisKey="OrderIDToMC" OtherKey="OrderIDToMC" Type="Order_To_Medicine_Company" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Order_To_Medicine_Company" Member="Order_To_Medicine_Companies">
+    <Type Name="Order_To_Medicine_Company">
+      <Column Name="OrderIDToMC" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="[Due Date]" Member="Due_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MedicineCompanyID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="[Order Date]" Member="Order_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="[Placed By]" Member="Placed_By" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Order_To_Medicine_Company_Purchase" Member="Purchases" ThisKey="OrderIDToMC" OtherKey="OrderIDToMC" Type="Purchase" />
+      <Association Name="Order_To_Medicine_Company_Order_To_Medicine_Company_Per_Medicine" Member="Order_To_Medicine_Company_Per_Medicines" ThisKey="OrderIDToMC" OtherKey="OrderIDToMC" Type="Order_To_Medicine_Company_Per_Medicine" />
+      <Association Name="Medicine_Company_Order_To_Medicine_Company" Member="Medicine_Company" ThisKey="MedicineCompanyID" OtherKey="MedicineCompanyID" Type="Medicine_Company" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Purchase_Return" Member="Purchase_Returns">
+    <Type Name="Purchase_Return">
+      <Column Name="PurchaseReturnID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="[Return Date]" Member="Return_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PurchaseID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="ReturnAmount" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="ReturnDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="Purchase_Return_Purchase_Return_Invoice" Member="Purchase_Return_Invoices" ThisKey="PurchaseReturnID" OtherKey="PurchaseReturnID" Type="Purchase_Return_Invoice" />
+      <Association Name="Purchase_Purchase_Return" Member="Purchase" ThisKey="PurchaseID" OtherKey="PurchaseID" Type="Purchase" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sales_Invoice" Member="Sales_Invoices">
+    <Type Name="Sales_Invoice">
+      <Column Name="sInvoiceID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sInvoiceDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Quantity" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Price" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="SaleID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="Sale_Sales_Invoice" Member="Sale" ThisKey="SaleID" OtherKey="SaleID" Type="Sale" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sales_Return_Invoice" Member="Sales_Return_Invoices">
+    <Type Name="Sales_Return_Invoice">
+      <Column Name="srInvoice" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="srInvoiceDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Quantity" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Price" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="SaleReturnID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="Sales_Return_Sales_Return_Invoice" Member="Sales_Return" ThisKey="SaleReturnID" OtherKey="SaleReturnID" Type="Sales_Return" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Order_by_Medical_Store_Per_Medicine" Member="Order_by_Medical_Store_Per_Medicines">
+    <Type Name="Order_by_Medical_Store_Per_Medicine">
+      <Column Name="OrderIDMSPerMedicine" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="OrderIDByMS" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="MedicineID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="ReturnStatus" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="ReturnDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ReturnAmount" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Discount" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="DiscountAmount" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="NetAmount" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="ReturnNetAmount" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="Order_By_Medical_Store_Order_by_Medical_Store_Per_Medicine" Member="Order_By_Medical_Store" ThisKey="OrderIDByMS" OtherKey="OrderIDByMS" Type="Order_By_Medical_Store" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Purchase_Invoice" Member="Purchase_Invoices">
+    <Type Name="Purchase_Invoice">
+      <Column Name="pInvoiceID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="pInvoiceDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Quantity" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Price" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="PurchaseID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="Purchase_Purchase_Invoice" Member="Purchase" ThisKey="PurchaseID" OtherKey="PurchaseID" Type="Purchase" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Order_To_Medicine_Company_Per_Medicine" Member="Order_To_Medicine_Company_Per_Medicines">
+    <Type Name="Order_To_Medicine_Company_Per_Medicine">
+      <Column Name="OrderIDMCPerMedicine" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OrderIDToMC" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="MedicineID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="ReturnStatus" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="ReturnDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ReturnAmount" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="NetAmount" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="ReturnNetAmount" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="Order_To_Medicine_Company_Order_To_Medicine_Company_Per_Medicine" Member="Order_To_Medicine_Company" ThisKey="OrderIDToMC" OtherKey="OrderIDToMC" Type="Order_To_Medicine_Company" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Purchase_Return_Invoice" Member="Purchase_Return_Invoices">
+    <Type Name="Purchase_Return_Invoice">
+      <Column Name="prInvoice" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="prInvoiceDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Quantity" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Price" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="PurchaseReturnID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="Purchase_Return_Purchase_Return_Invoice" Member="Purchase_Return" ThisKey="PurchaseReturnID" OtherKey="PurchaseReturnID" Type="Purchase_Return" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Notifications" Member="Notifications">
+    <Type Name="Notification">
+      <Column Name="NotificationId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="OrderNumber" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="User_Notification" Member="User" ThisKey="UserID" OtherKey="UserId" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[Transaction]" Member="Transactions">
+    <Type Name="Transaction">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Order#" Member="Order_" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="[Client/Supplier]" Member="Client_Supplier" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Order_By_Medical_Store" Member="Order_By_Medical_Stores">
+    <Type Name="Order_By_Medical_Store">
+      <Column Name="OrderIDByMS" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="[Due Date]" Member="Due_Date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MedicalStoreID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="[Order Date]" Member="Order_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="[Placed By]" Member="Placed_By" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="[Recieved By]" Member="Recieved_By" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="[Delivered Date]" Member="Delivered_Date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="Order_By_Medical_Store_Sale" Member="Sales" ThisKey="OrderIDByMS" OtherKey="OrderIDByMS" Type="Sale" />
+      <Association Name="Order_By_Medical_Store_Order_by_Medical_Store_Per_Medicine" Member="Order_by_Medical_Store_Per_Medicines" ThisKey="OrderIDByMS" OtherKey="OrderIDByMS" Type="Order_by_Medical_Store_Per_Medicine" />
+      <Association Name="Medical_Store_Order_By_Medical_Store" Member="Medical_Store" ThisKey="MedicalStoreID" OtherKey="MedicalStoreID" Type="Medical_Store" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Chart" Member="Charts">
+    <Type Name="Chart">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MedicalStoreName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Sum" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Month" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="Year" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Medicine_Company" Member="Medicine_Companies">
+    <Type Name="Medicine_Company">
+      <Column Name="MedicineCompanyID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MedicineCompanyName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Fax" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AlternativePhone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AlternativeEmail" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Medicine_Company_Order_To_Medicine_Company" Member="Order_To_Medicine_Companies" ThisKey="MedicineCompanyID" OtherKey="MedicineCompanyID" Type="Order_To_Medicine_Company" />
+      <Association Name="Medicine_Company_Medicine_In_Stock" Member="Medicine_In_Stocks" ThisKey="MedicineCompanyID" OtherKey="MedicineCompanyID" Type="Medicine_In_Stock" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Medical_Store" Member="Medical_Stores">
+    <Type Name="Medical_Store">
+      <Column Name="MedicalStoreID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MedicalStoreName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Alternative_Email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Alternative_Phone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Fax" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Medical_Store_Order_By_Medical_Store" Member="Order_By_Medical_Stores" ThisKey="MedicalStoreID" OtherKey="MedicalStoreID" Type="Order_By_Medical_Store" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Medicine_In_Stock" Member="Medicine_In_Stocks">
+    <Type Name="Medicine_In_Stock">
+      <Column Name="MedicineID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MedicineName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="ManufactureDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ExpiryDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="MedicineCompanyID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="MedicineCategoryID" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="BatchNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PackSize" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Image" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Association Name="Medicine_Category_Medicine_In_Stock" Member="Medicine_Category" ThisKey="MedicineCategoryID" OtherKey="MedicineCategoryID" Type="Medicine_Category" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="Medicine_Company_Medicine_In_Stock" Member="Medicine_Company" ThisKey="MedicineCompanyID" OtherKey="MedicineCompanyID" Type="Medicine_Company" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.GetMedicineCategory" Method="GetMedicineCategory">
+    <ElementType Name="GetMedicineCategoryResult">
+      <Column Name="MedicineCategoryID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="MedicineCategoryName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetMedicineCategoryID" Method="GetMedicineCategoryID">
+    <Parameter Name="MedicineCategoryName" Parameter="medicineCategoryName" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="MedicineCategoryID" Parameter="medicineCategoryID" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetMedicineCompanyID" Method="GetMedicineCompanyID">
+    <Parameter Name="MedicineCompanyName" Parameter="medicineCompanyName" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="MedicineCompanyID" Parameter="medicineCompanyID" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetMedicalStoreID" Method="GetMedicalStoreID">
+    <Parameter Name="MedicalStoreName" Parameter="medicalStoreName" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="MedicalStoreID" Parameter="medicalStoreID" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetMedicineID" Method="GetMedicineID">
+    <Parameter Name="MedicineName" Parameter="medicineName" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="MedicineID" Parameter="medicineID" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Insert_User" Method="Insert_User">
+    <Parameter Name="Username" Parameter="username" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="Password" Parameter="password" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="NVarChar(30)" />
+    <ElementType Name="Insert_UserResult">
+      <Column Name="" Member="Column1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetMedicine" Method="GetMedicine">
+    <ElementType Name="GetMedicineResult">
+      <Column Name="MedicineID" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="BatchNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MedicineName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Price" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="ExpiryDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ManufactureDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="MedicineCategoryName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MedicineCompanyName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetMedicineIDByBatch" Method="GetMedicineIDByBatch">
+    <Parameter Name="BatchNo" Parameter="batchNo" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="MedicineID" Parameter="medicineID" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetMaxMedicineID" Method="GetMaxMedicineID">
+    <Parameter Name="MedicineName" Parameter="medicineName" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="MedicineID" Parameter="medicineID" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+</Database>
